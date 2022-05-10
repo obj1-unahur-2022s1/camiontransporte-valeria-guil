@@ -1,23 +1,36 @@
 object knightRider {
 	method peso() = 500
 	method nivelPeligrosidad() = 10
+	method cantidadDeBultos() = 1
+	method sufrirCambios() {}
 }
 
 object bumblebee {
-	var transformadoEnAuto = false
+	var transformadoEnRobot = false
 	method peso() = 800
-	method transformarAAuto() {
-		transformadoEnAuto = true
+	method transformarARobot() {
+		transformadoEnRobot = true
 	}
-	method estaTransformadoEnAuto() = transformadoEnAuto
-	method nivelPeligrosidad() = if (self.estaTransformadoEnAuto()) {15} else {30}	
+	method estaTransformadoEnRobot() = transformadoEnRobot
+	method nivelPeligrosidad() = if (self.estaTransformadoEnRobot()) {30} else {15}	
+	method cantidadDeBultos() = 2
+	method sufrirCambios() {
+		self.transformarARobot()
+	}
 }
 
-object paqueteLadrillos{ 
+object paqueteLadrillos{
 	var ladrillos  = 0
 	method peso() = ladrillos * 2
 	method nivelPeligrosidad() = 2
 	method agregarLadrillos(cantidad) { ladrillos = cantidad}
+	method cantidadDeBultos() = 
+		if(ladrillos <= 100) {1} 
+		else if (ladrillos.between(101, 300)) {2}
+		else {3}
+ 	method sufrirCambios() {
+ 		self.agregarLadrillos(12)
+ 	}
 }
 
 object arena {
@@ -25,6 +38,10 @@ object arena {
 	method nivelPeligrosidad() = 1
 	method peso() = peso
 	method agregarPeso(agregarPeso) {peso = agregarPeso}
+	method cantidadDeBultos() = 1
+	method sufrirCambios() {
+ 		self.agregarPeso(20)
+ 	}
 }
 
 object bateriaAntiarea {
@@ -33,6 +50,10 @@ object bateriaAntiarea {
 	method nivelPeligrosidad() = if (self.estaConMisiles()) {100} else {0}
 	method estaConMisiles() = tieneMisiles
 	method cargarMisiles() {tieneMisiles = true}
+	method cantidadDeBultos() = if(self.estaConMisiles()) {2} else {1}
+	method sufrirCambios() {
+ 		self.cargarMisiles()
+ 	}
 }
 
 object contenedor {
@@ -42,6 +63,10 @@ object contenedor {
 		if (cosas.isEmpty()) {0} else 
 		   {cosas.map({c => c.nivelPeligrosidad()}).max()}
 	method cargarCosas(cargarCosa) {cosas.addAll(cargarCosa)}
+	method cantidadDeBultos() = 1 + cosas.sum({c => c.cantidadDeBultos()})
+	method sufrirCambios() {
+ 		cosas.map({c => c.sufrirCambios()})
+ 	}
 }
 
 object residuosRadioactivos {
@@ -49,6 +74,10 @@ object residuosRadioactivos {
 	method nivelPeligrosidad() = 200 
 	method peso() = peso
 	method agregarPesoResiduos(pesoResiduos) {peso = pesoResiduos}
+	method cantidadDeBultos() = 1
+	method sufrirCambios() {
+ 		self.agregarPesoResiduos(15)
+ 	}
 }
 
 object embalajeSeguridad {
@@ -56,8 +85,6 @@ object embalajeSeguridad {
 	method peso() = cosaAdentro.peso()
 	method nivelPeligrosidad() = cosaAdentro.nivelPeligrosidad() / 2
 	method envolverCosa(cosa) {cosaAdentro = cosa}
+	method cantidadDeBultos() = 2
+	method sufrirCambios() {}
 }
-
-
-
-

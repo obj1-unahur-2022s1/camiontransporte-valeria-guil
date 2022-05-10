@@ -1,3 +1,59 @@
 import camion.*
 import cosas.*
 
+// profe , le hago una aclaracion con respecto a los test, no pude utilizar 
+// el metodo initialize() ya que tengo windows 7 32 bits, y utilizo esta version (Version 1.9.2) 
+
+describe "Test sobre camion" {
+	fixture {
+		camion.cargar(bumblebee)
+		arena.agregarPeso(150)
+		camion.cargar(arena)
+		bateriaAntiarea.cargarMisiles()
+		camion.cargar(bateriaAntiarea)
+		paqueteLadrillos.agregarLadrillos(80)
+		embalajeSeguridad.envolverCosa(paqueteLadrillos)
+		camion.cargar(embalajeSeguridad)
+	}
+	
+	test " test de todo peso par" {
+		assert.that(camion.todoPesoPar())
+	}
+
+	test "test de hay Alguno Que Pesa" {
+		assert.that(camion.hayAlgunoQuePesa(800))
+	}
+
+	test "test de el de nivel dado " {
+		assert.equals(bumblebee,camion.elDeNivel(30))
+	}	
+	
+	test "test de peso total" {
+		assert.equals(2410,camion.pesoTotal())
+	}
+	
+	test "test de si esta excedido De Peso" {
+		assert.notThat(camion.excedidoDePeso())
+	}
+	
+	test "test de objetos Que Superan Peligrosidad dada" {
+		assert.equals([bumblebee,bateriaAntiarea],camion.objetosQueSuperanPeligrosidad(20))
+	}
+	test "test sobre objetos Mas Peligrosos Que cosa dada" {
+		assert.equals([bumblebee,bateriaAntiarea],camion.objetosMasPeligrososQue(embalajeSeguridad))
+	}
+	test "test sobre si puede circular en ruta el camion " {
+		assert.that(camion.puedeCircularEnRuta(200))
+	}
+	test "test sobre si tiene Algo Que Pesa Entre los pesos dados" {
+		assert.that(camion.tieneAlgoQuePesaEntre(300, 1000))
+	}
+	
+	test "test sobre cosa mas pesada" {
+		assert.equals(bumblebee,camion.cosaMasPesada())
+	}
+	
+	test "test sobre pesos" {
+		assert.equals([800,150,300,160],camion.pesos())
+	}
+}
