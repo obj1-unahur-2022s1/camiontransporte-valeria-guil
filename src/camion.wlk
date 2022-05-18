@@ -1,3 +1,6 @@
+/*
+ * Muy Bien
+ */
 import cosas.*
 
 object camion {
@@ -6,13 +9,15 @@ object camion {
 	
 	method cargar(cosa)  {cosas.add(cosa)}
 	method descargar(cosa) {cosas.remove(cosa)}
-	method todoPesoPar() = cosas.all( { c => c.peso() % 2 == 0 } )
+	/* Podes usar even() sobre un número pasar saber si es para */
+	method todoPesoPar() = cosas.all( { c => c.peso().even() } )
 	method hayAlgunoQuePesa(peso) =  cosas.any({c => c.peso() == peso})
 	method elDeNivel(nivel) = cosas.find({c => c.nivelPeligrosidad() == nivel})
 	method pesoTotal() = tara + cosas.sum({ c => c.peso() })
 	method excedidoDePeso() = self.pesoTotal() > 2500
 	method objetosQueSuperanPeligrosidad(nivel) = 
 		cosas.filter({c => c.nivelPeligrosidad() > nivel})	
+	/* Muy bien que te diste cuenta que podias reutilizar */
 	method objetosMasPeligrososQue(cosa) = 
 		 self.objetosQueSuperanPeligrosidad(cosa.nivelPeligrosidad()) 
 	method puedeCircularEnRuta(nivelMaximoPeligrosidad) =

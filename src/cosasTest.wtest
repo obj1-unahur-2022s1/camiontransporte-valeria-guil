@@ -1,3 +1,6 @@
+/*
+ * lo cambio a initialize para poder probarlos
+ */
 import camion.*
 import cosas.*
 
@@ -6,7 +9,7 @@ import cosas.*
 
 describe "TestSobreCosas" {
 	
-	fixture {
+	method initialize() {
 		paqueteLadrillos.agregarLadrillos(100)
 		arena.agregarPeso(20)
 		bateriaAntiarea.cargarMisiles()

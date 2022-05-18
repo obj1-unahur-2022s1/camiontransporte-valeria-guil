@@ -1,3 +1,6 @@
+/*
+ * Revisar los comentarios sobre el objetos
+ */
 object knightRider {
 	method peso() = 500
 	method nivelPeligrosidad() = 10
@@ -6,6 +9,7 @@ object knightRider {
 }
 
 object bumblebee {
+	/*NO quedo ningun método que lo vuelva a auto :-( */
 	var transformadoEnRobot = false
 	method peso() = 800
 	method transformarARobot() {
@@ -45,6 +49,7 @@ object arena {
 }
 
 object bateriaAntiarea {
+	/*NO quedo ningun método para descargar los misiles :-( */
 	var tieneMisiles = false
 	method peso() = if (self.estaConMisiles()) {300} else {200}
 	method nivelPeligrosidad() = if (self.estaConMisiles()) {100} else {0}
@@ -61,11 +66,15 @@ object contenedor {
 	method peso() = 100 + cosas.sum({c => c.peso()}) 
 	method nivelPeligrosidad() = 
 		if (cosas.isEmpty()) {0} else 
-		   {cosas.map({c => c.nivelPeligrosidad()}).max()}
+		   /* podias usar max sin el map */	
+		   //{cosas.map({c => c.nivelPeligrosidad()}).max()}
+		   {cosas.max({c => c.nivelPeligrosidad()}).nivelPeligrosidad()}
 	method cargarCosas(cargarCosa) {cosas.addAll(cargarCosa)}
 	method cantidadDeBultos() = 1 + cosas.sum({c => c.cantidadDeBultos()})
 	method sufrirCambios() {
- 		cosas.map({c => c.sufrirCambios()})
+		/* esto es un forEach */
+ 		//cosas.map({c => c.sufrirCambios()})
+ 		cosas.forEach({c => c.sufrirCambios()})
  	}
 }
 
