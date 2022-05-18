@@ -1,11 +1,16 @@
 import camion.*
 import cosas.*
+/*
+ * Lo cambio a initialize para poder probarlos
+ * Pasaron todos OK
+ */
+
 
 // profe , le hago una aclaracion con respecto a los test, no pude utilizar 
 // el metodo initialize() ya que tengo windows 7 32 bits, y utilizo esta version (Version 1.9.2) 
 
 describe "Test sobre camion" {
-	fixture {
+	method initialize() {
 		camion.cargar(bumblebee)
 		arena.agregarPeso(150)
 		camion.cargar(arena)
